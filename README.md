@@ -64,18 +64,20 @@ Registration inference takes moving and fixed 64-channel feature NIfTIs in a com
 
 ## Results
 
-**DWI enhancement.** Reconstruction and derived microstructural maps on the HCP-YA benchmark (paper Fig. 2).
+**DWI enhancement.** Predicted DWIs and derived FA/MK maps compared with other methods and the reference across three diffusion shells.
 
 ![DWI enhancement comparison](docs/figures/dwi_enhancement.png)
 
-**Brain parcellation.** Segmentation comparisons and performance across acquisitions (paper Fig. 6).
+**Brain parcellation.** Example anatomical labels and a magnified comparison with the reference.
 
 ![Brain parcellation results](docs/figures/brain_parcellation.png)
 
-**Inter-subject registration.** Alignment comparisons and cross-dataset evaluation (paper Fig. 7).
+**Inter-subject registration.** An example alignment of the pallidum boundary, followed by a tractography comparison.
 
-![Registration results](docs/figures/registration.png)
+![Pallidum alignment after registration](docs/figures/Registration%20_1.png)
 
-**T1w synthesis.** Synthesized anatomical images and quantitative comparisons (paper Fig. 8).
+![Tractography after registration](docs/figures/Registration_2.png)
 
-![T1w synthesis results](docs/figures/t1w_synthesis.png)
+**T1w synthesis.** Synthesized anatomical images and magnified comparisons across datasets.
+
+![T1w synthesis results](docs/figures/dwi_synthesis.png)
