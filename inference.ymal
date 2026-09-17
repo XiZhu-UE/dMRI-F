@@ -1,0 +1,50 @@
+# Single-subject target-gradient synthesis. Set the six required input paths before running inference.py.
+# Relative paths are resolved beside this configuration file.
+
+# Required: one 3D b0 NIfTI (or a 4D image with one volume); copied to output volume 0.
+b0: null
+
+# Required: source DWI NIfTI, without b0; all supplied volumes are used.
+source_dwi: null
+
+# Required: b-values for the source DWI volumes, in the same order.
+source_bvals: null
+
+# Required: source b-vectors, 3xN or Nx3; the source count must match the checkpoint.
+source_bvecs: null
+
+# Required: requested output b-values, one per target volume.
+target_bvals: null
+
+# Required: requested output b-vectors, in target order; target images are not required.
+target_bvecs: null
+
+# Optional aligned mask NIfTI; null uses finite, positive b0 support (not brain extraction).
+mask: null
+
+# Model weights; the source count is checked against the encoder input channels.
+checkpoint: checkpoints/pretraining_6dir.pth
+
+# Required number of source DWI volumes; must match the checkpoint.
+source_directions: 6
+
+# Output NIfTI: input b0 followed by targets; matching .bval and .bvec files are also written.
+output: outputs/inference/pred_dwi.nii.gz
+
+# PyTorch device; falls back to CPU only when CUDA is unavailable.
+device: cuda:7
+
+# Sliding-window size in voxels, each divisible by 4.
+patch_size: [64, 64, 64]
+
+# Even overlap per axis, smaller than patch_size.
+patch_overlap: [32, 32, 32]
+
+# Optional positive xmax scalar from the source acquisition; null uses its masked source-DWI 99th percentile.
+normalization_scale: null
+
+# Fixed b-value scale for direction encoding; keep the value used by the checkpoint.
+bval_scale: 3010.0
+
+# Patch loading workers; 0 uses the main process.
+num_workers: 8

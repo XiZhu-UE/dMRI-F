@@ -1,0 +1,21 @@
+# Relative paths are resolved beside this configuration file.
+# Moving 4D NIfTI containing 64 feature channels in registration space.
+moving_feature: data/inference/moving_feature.nii.gz
+# Fixed 4D NIfTI containing 64 feature channels in the same voxel grid.
+fixed_feature: data/inference/fixed_feature.nii.gz
+# Moving 3D b0 NIfTI aligned with moving_feature; needed for the warped output.
+moving_b0: data/inference/moving_b0.nii.gz
+# Predicted integrated displacement field in the fixed grid, with 3 channels last.
+flow_output: outputs/downstream_reg/flow_m2f.nii.gz
+# Moving b0 warped into the fixed grid; values retain the input b0 scale.
+warped_b0_output: outputs/downstream_reg/warped_b0.nii.gz
+# Trained registration state dictionary.
+checkpoint: checkpoints/downstream_reg.pth
+# PyTorch device; CPU is used if the selected CUDA device is unavailable.
+device: cuda:1
+# Center crop used by registration training; each dimension is divisible by 16.
+volume_size: [144, 160, 144]
+# Scaling-and-squaring steps used before warping the moving b0.
+integration_steps: 1
+# Erode nonzero feature support as in registration training; 0 disables erosion.
+mask_erosion: 2

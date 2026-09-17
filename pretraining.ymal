@@ -1,0 +1,53 @@
+# Pretraining options. The validated architecture and routine implementation defaults are defined in dimf/defaults.py.
+# Relative paths are resolved beside this configuration file.
+
+# Directory containing per-volume NPY files produced by nii2npy.py.
+data_root: data/prepared/volumes
+
+# Directory containing the prepared mask and xmax files.
+metadata_root: data/prepared/metadata
+
+# Weights loaded if present and overwritten after each epoch; optimizer state is not resumed.
+checkpoint: checkpoints/pretraining_6dir.pth
+
+# Directory for validation previews.
+visualization_dir: outputs/pretraining/visualizations
+
+# Output path for the training/validation loss plot.
+loss_curve: outputs/pretraining/loss_curve.png
+
+# PyTorch device; training does not automatically fall back to CPU.
+device: cuda:0
+
+# Number of source DWI volumes; must match any loaded checkpoint.
+source_directions: 6
+
+# Number of epochs for this run.
+epochs: 600
+
+# Adam learning rate.
+learning_rate: 0.0001
+
+# Take the first N sorted subject IDs for training; must not overlap validation.
+train_subjects: 200
+
+# Take the last N sorted subject IDs for validation.
+validation_subjects: 20
+
+# Patch dimensions in voxels, each divisible by 4; whole-image size is inferred per subject.
+patch_size: [64, 64, 64]
+
+# DataLoader worker count; 0 uses the main process.
+num_workers: 8
+
+# Shell key in xmax.json used to scale source and target intensities.
+normalization_shell: 1000
+
+# Use source directions with b below this threshold (s/mm^2).
+source_bval_upper: 1500
+
+# Total loss = L1 + this weight times perceptual loss.
+perceptual_weight: 0.001
+
+# Optional random seed; null preserves the original unfixed random sampling.
+seed: null

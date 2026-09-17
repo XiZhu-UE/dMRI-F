@@ -1,0 +1,15 @@
+# Relative paths are resolved beside this configuration file.
+# Input 4D NIfTI with volume 0 = b0 and volumes 1-6 = source DWI.
+input: data/inference/parc_input.nii.gz
+# Output 3D NIfTI containing predicted class indices (0-97).
+output: outputs/downstream_parc/prediction.nii.gz
+# Trained parcellation state dictionary.
+checkpoint: checkpoints/downstream_parc.pth
+# PyTorch device; CPU is used if the selected CUDA device is unavailable.
+device: cuda:4
+# Source DWI count following b0; must match the checkpoint.
+source_directions: 6
+# Sliding-window patch dimensions, each divisible by 4.
+patch_size: [64, 64, 64]
+# Even overlap per axis, smaller than patch_size.
+patch_overlap: [32, 32, 32]

@@ -1,0 +1,17 @@
+# Relative paths are resolved beside this configuration file.
+# Input 4D NIfTI: volume 0 is b0 and volumes 1-6 are source DWI.
+input: data/inference/feature_input.nii.gz
+# Output 4D NIfTI with 64 feature channels in the input image space.
+output: outputs/features/feature.nii.gz
+# Six-direction pretrained model state dictionary containing ImageEncoder weights.
+checkpoint: checkpoints/pretraining_6dir.pth
+# PyTorch device; CPU is used if the selected CUDA device is unavailable.
+device: cuda:0
+# Number of source DWI volumes after b0; this example requires six.
+source_directions: 6
+# Sliding-window dimensions in voxels, each divisible by 4.
+patch_size: [64, 64, 64]
+# Even overlap per axis, smaller than patch_size.
+patch_overlap: [32, 32, 32]
+# Optional source-DWI normalization scale; null uses the masked 99th percentile.
+normalization_scale: null

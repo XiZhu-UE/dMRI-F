@@ -1,0 +1,38 @@
+# Raw data preparation for both calculate_shell_max.py and nii2npy.py. No xmax input is required.
+# Relative paths are resolved beside this configuration file.
+
+# Root directory of the raw subject data.
+input_dir: data/raw
+
+# Path pattern relative to input_dir; {subject} captures a unique subject ID. ** matches subdirectories.
+dwi_pattern: '**/{subject}_denoised.nii.gz'
+
+# B-value path relative to each DWI directory; {subject} is replaced with the captured ID.
+bval_pattern: '{subject}_bval.bval'
+
+# B-vector path relative to each DWI directory; accepts 3xN or Nx3 arrays.
+bvec_pattern: '{subject}_bvecs.bvec'
+
+# Mask path relative to each DWI directory; null uses nonzero b0/DWI support, not brain extraction.
+mask_pattern: '{subject}_mask.nii.gz'
+
+# Output directory for per-volume NPY files; existing matching files are overwritten.
+output_dir: data/prepared/volumes
+
+# Output directory for standardized {subject}_mask.nii.gz and {subject}_xmax.json files.
+metadata_dir: data/prepared/metadata
+
+# Export only volumes with b > this value (s/mm^2); no trailing volumes are silently removed.
+bval_min: 200
+
+# Shell centers (s/mm^2) for intensity normalization; edit for your acquisition.
+shells: [1000, 2000, 3000]
+
+# Inclusive distance from each shell center (s/mm^2).
+shell_tolerance: 30
+
+# Signal percentile within the mask for each shell (0-100).
+percentile: 99
+
+# Maximum number of parallel subjects; use 1 for sequential execution.
+workers: 16

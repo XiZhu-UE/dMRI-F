@@ -1,0 +1,55 @@
+# Relative paths are resolved beside this configuration file.
+# Directory containing per-direction NPY files produced by nii2npy.
+npy_dir: data/prepared/volumes
+# Directory containing {subject}_xmax.json shell normalization files.
+metadata_dir: data/prepared/metadata
+# Pretrained NeRF weights matching source_directions.
+pretrain_checkpoint: checkpoints/pretraining_6dir.pth
+# Directory containing brain masks in the same space as the inputs.
+mask_dir: data/prepared/metadata
+# Mask filename template.
+mask_pattern: "{subject}_mask.nii.gz"
+# Directory containing mean b0 volumes aligned with the inputs.
+b0_dir: data/downstream/b0
+# Mean b0 filename template.
+b0_pattern: "{subject}_b0_mean.nii.gz"
+# Directory containing aligned ground-truth targets.
+target_dir: data/downstream/t1
+# Ground-truth filename template.
+target_pattern: "{subject}_T1w_masked.nii.gz"
+# Model state-dictionary destination, also used for optional weight loading.
+checkpoint: checkpoints/downstream_syn.pth
+# Directory for loss history and validation figures.
+output_dir: outputs/downstream_syn
+# Load existing checkpoint weights; optimizer state is not restored.
+resume_if_exists: true
+# PyTorch device; change to the GPU available on your machine or cpu.
+device: "cuda:3"
+# Number of training epochs in this run.
+epochs: 300
+# Adam learning rate.
+learning_rate: 0.0001
+# Number of samples per training or validation batch.
+batch_size: 1
+# DataLoader subprocesses; use 0 for single-process loading.
+num_workers: 8
+# Optional random seed; null preserves the original unseeded behavior.
+seed: null
+# Sorted subject slice [start, stop); null denotes an open endpoint.
+train_slice: [0, 45]
+# Validation slice; preserved from the original script. Avoid overlap with training.
+validation_slice: [45, 50]
+# Random samples per subject per epoch; registration samples are subject pairs.
+samples_per_subject: 20
+# Number of randomly selected source DWI volumes; must match pretrained weights.
+source_directions: 6
+# Select source volumes with b-values strictly below this threshold.
+source_bval_upper: 1500
+# Shell key used in each subject's xmax JSON for DWI normalization.
+normalization_shell: 1000
+# Spatial patch dimensions, divisible by 4 for parc or 8 for syn.
+patch_size: [64, 64, 64]
+# Freeze the pretrained image encoder during downstream training.
+freeze_encoder: true
+# AlexNet perceptual loss weight added to masked L1 reconstruction loss.
+perceptual_weight: 0.01

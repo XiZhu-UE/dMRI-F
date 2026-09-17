@@ -1,0 +1,12 @@
+# Install the appropriate PyTorch build for your CUDA runtime first.
+# Versions are unpinned because the original environment was not supplied.
+numpy
+torch
+torchvision
+nibabel
+torchio
+monai-generative
+matplotlib
+tqdm
+PyYAML
+scipy

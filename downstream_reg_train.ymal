@@ -1,0 +1,45 @@
+# Relative paths are resolved beside this configuration file.
+# Directory containing precomputed 64-channel feature NIfTI files.
+feature_dir: data/downstream/features
+# Feature filename template; {subject} is the complete subject ID.
+feature_pattern: "{subject}_feature.nii.gz"
+# Directory containing brain masks in the same space as the inputs.
+mask_dir: data/prepared/metadata
+# Mask filename template.
+mask_pattern: "{subject}_mask.nii.gz"
+# Directory containing mean b0 volumes aligned with the inputs.
+b0_dir: data/downstream/b0
+# Mean b0 filename template.
+b0_pattern: "{subject}_b0_mean.nii.gz"
+# Model state-dictionary destination, also used for optional weight loading.
+checkpoint: checkpoints/downstream_reg.pth
+# Directory for loss history and validation figures.
+output_dir: outputs/downstream_reg
+# Load existing checkpoint weights; optimizer state is not restored.
+resume_if_exists: true
+# PyTorch device; change to the GPU available on your machine or cpu.
+device: "cuda:1"
+# Number of training epochs in this run.
+epochs: 300
+# Adam learning rate.
+learning_rate: 0.0001
+# Number of samples per training or validation batch.
+batch_size: 1
+# DataLoader subprocesses; use 0 for single-process loading.
+num_workers: 4
+# Optional random seed; null preserves the original unseeded behavior.
+seed: null
+# Sorted subject slice [start, stop); null denotes an open endpoint.
+train_slice: [0, 45]
+# Validation slice; preserved from the original script. Avoid overlap with training.
+validation_slice: [-5, null]
+# Random samples per subject per epoch; registration samples are subject pairs.
+samples_per_subject: 2
+# Center-cropped spatial dimensions; each must be divisible by 16.
+volume_size: [144, 160, 144]
+# Binary mask erosion iterations; 0 disables erosion.
+mask_erosion: 2
+# L2 velocity-gradient regularization weight added to local NCC loss.
+gradient_weight: 1.0
+# Scaling-and-squaring integration steps.
+integration_steps: 1
